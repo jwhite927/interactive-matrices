@@ -13,7 +13,7 @@ impl Matrix {
         let new_matrix = Matrix {
             matrix: [[num1,num2],[num3,num4]],
             rows: 2,
-            columns: 1,
+            columns: 2,
         };
         new_matrix
     }
@@ -33,10 +33,15 @@ impl Matrix {
 
     pub fn top_bot_spaces(&self) -> String {
         let mut string = String::new();
+        let extra_spaces = 3 * (self.columns - 1) + 2;
+        println!("extra_spaces is {}",extra_spaces);
         for widest in self.col_widths() {
             for _ in 0..widest {
                 string.push_str(" ");
             }
+        }
+        for _ in 0..extra_spaces {
+            string.push_str(" ");
         }
         string
 }
@@ -79,7 +84,7 @@ impl Matrix {
 
 impl fmt::Display for Matrix {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        let mut string_to_write = "\u{250C}     ".to_owned();
+        let mut string_to_write = "\u{250C}".to_owned();
         string_to_write.push_str(&self.top_bot_spaces());
         string_to_write.push_str("\u{2510}\n\u{2502} ");
         for row in 0..self.rows {
@@ -93,7 +98,7 @@ impl fmt::Display for Matrix {
             string_to_write.push_str(" \u{2502}\n\u{2502} ");
             }
         }
-        string_to_write.push_str(" \u{2502}\n\u{2514}     ");
+        string_to_write.push_str(" \u{2502}\n\u{2514}");
         string_to_write.push_str(&self.top_bot_spaces());
         string_to_write.push_str("\u{2518}");
         write!(f, "{}", string_to_write)
@@ -162,7 +167,7 @@ mod tests {
     #[test]
     fn spaces_4() {
         let matrix = Matrix::new(12,1,123,1);
-        assert_eq!(matrix.top_bot_spaces(), "    ");
+        assert_eq!(matrix.top_bot_spaces(), "         ");
     }
 
     #[test]
@@ -174,9 +179,9 @@ mod tests {
     #[test]
     fn top_bot_match_length_of_contents() {
         let mut matrix = Matrix::new(123, 1234, 1, 1);
-        assert_eq!(matrix.top_bot_spaces(), "       ");
+        assert_eq!(matrix.top_bot_spaces(), "            ");
         matrix.matrix[1][0] = 12345;
-        assert_eq!(matrix.top_bot_spaces(), "         ");
+        assert_eq!(matrix.top_bot_spaces(), "              ");
     }
 
     #[test]
