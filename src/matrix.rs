@@ -3,17 +3,17 @@ use super::*;
 use std::cmp::Ordering;
 
 pub struct Matrix {
-    pub matrix: [[i32; 2]; 2],
+    pub matrix: [[Option<i32>; 3]; 3],
     rows: usize,
     columns: usize,
 }
 
 impl Matrix {
-    pub fn new(num1: i32, num2: i32, num3: i32, num4: i32) -> Matrix {
+    pub fn new() -> Matrix {
         let new_matrix = Matrix {
-            matrix: [[num1,num2],[num3,num4]],
+            matrix: [[None, None, None],[None, None, None],[None, None, None]],
             rows: 2,
-            columns: 2,
+            columns: 1,
         };
         new_matrix
     }
@@ -28,13 +28,15 @@ impl Matrix {
         if let Ordering::Greater = col_to_return.cmp(&column) {
             col_to_return = column;
         }
-        self.matrix[row_to_return][col_to_return]
+        if let Some(value) = self.matrix[row_to_return][col_to_return] {
+            return value;
+        }
+        0
     }
 
     pub fn top_bot_spaces(&self) -> String {
         let mut string = String::new();
         let extra_spaces = 3 * (self.columns - 1) + 2;
-        println!("extra_spaces is {}",extra_spaces);
         for widest in self.col_widths() {
             for _ in 0..widest {
                 string.push_str(" ");
@@ -60,12 +62,13 @@ impl Matrix {
         for row in 0..self.rows {
             for column in 0..self.columns {
                 println!("Please enter a value for position {},{}", row + 1, column + 1);
-                self.matrix[row][column] = prompt_i32();
+                self.matrix[row][column] = Some(prompt_i32());
                 println!("{}", self);
             }
         }
     }
 
+//TODO Fix printing for 3x3
     pub fn col_widths(&self) -> Vec<usize> {
         let mut widest: usize = 0;
         let mut col_widths = Vec::new();
