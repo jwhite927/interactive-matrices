@@ -9,15 +9,17 @@ pub struct Matrix {
 }
 
 impl Matrix {
-    pub fn new() -> Matrix {
+    pub fn new(rows: usize, columns: usize) -> Matrix {
         let new_matrix = Matrix {
-            matrix: [[None, None, None],[None, None, None],[None, None, None]],
-            rows: 2,
-            columns: 1,
+            matrix: [[None; 3]; 3],
+            rows,
+            columns,
         };
         new_matrix
     }
 
+    //get_value works with array indices starting at 0. It is only when 
+    //a value is presented to the user that values start at 1.
     pub fn get_value(&self, row: usize, column: usize) -> i32 {
         let mut row_to_return = self.rows - 1;
         if let Ordering::Greater = row_to_return.cmp(&row) {
@@ -131,8 +133,12 @@ mod tests {
     use super::*;
 
     #[test]
-    fn display_looks_right() {
-        let matrix = Matrix::new(123,-1,12345,1);
+    fn display_looks_right_2x2() {
+        let mut matrix = Matrix::new(2,2);
+        matrix.matrix[0][0] = Some(123); 
+        matrix.matrix[0][1] = Some(-1); 
+        matrix.matrix[1][0] = Some(12345); 
+        matrix.matrix[1][1] = Some(1); 
         let mut check_string = "\u{250C}     ".to_owned();
         check_string.push_str("       ");
         check_string.push_str("\u{2510}\n\u{2502} ");
@@ -148,16 +154,46 @@ mod tests {
         check_string.push_str("\u{2518}");
         assert_eq!(&format!("{}", matrix), &check_string);
     }
+    
+    #[test]
+    fn display_looks_right_3x3() {
+        let mut matrix = Matrix::new(3,3);
+        matrix.matrix[0] = [Some(1), Some(1), Some(1)];
+        matrix.matrix[1] = [Some(1), Some(1), Some(1)];
+        matrix.matrix[2] = [Some(1), Some(1), Some(1)];
+        let mut check_string = "\u{250C}".to_owned();
+        check_string.push_str("           ");
+        check_string.push_str("\u{2510}\n\u{2502} ");
+        check_string.push_str("1 , 1 , 1");
+        check_string.push_str(" \u{2502}\n\u{2502} ");
+        check_string.push_str("1 , 1 , 1");
+        check_string.push_str(" \u{2502}\n\u{2502} ");
+        check_string.push_str("1 , 1 , 1");
+        check_string.push_str(" \u{2502}\n\u{2514}");
+        check_string.push_str("           ");
+        check_string.push_str("\u{2518}");
+        assert_eq!(&format!("{}", matrix), &check_string);
+    }
+
     #[test]
     fn negative_values_print_correctly() {
         assert_eq!(num_digits(-1),2);
-        let matrix = Matrix::new(-12321, 1, 123, 32);
+        let mut matrix = Matrix::new(2,2);
+        matrix.matrix[0][0] = Some(-12321);
+        matrix.matrix[0][1] = Some(1);
+        matrix.matrix[1][0] = Some(123);
+        matrix.matrix[1][1] = Some(32);
         assert_eq!(matrix.print_value(0,0), "-12321");
         assert_eq!(matrix.print_value(1,0), "123   ");
     }
+
     #[test]
     fn array_out_of_bounds_uses_min_max() {
-        let matrix = Matrix::new(1,1,1,1);
+        let mut matrix = Matrix::new(2,2);
+        matrix.matrix[0][0] = Some(1);
+        matrix.matrix[0][1] = Some(2);
+        matrix.matrix[1][0] = Some(3);
+        matrix.matrix[1][1] = Some(4);
         assert_eq!(matrix.get_value(5,6),matrix.get_value(1,1));
     }
 
@@ -168,28 +204,45 @@ mod tests {
     }
 
     #[test]
-    fn spaces_4() {
-        let matrix = Matrix::new(12,1,123,1);
+    fn top_bot_spaces_produces_correct_number_of_spaces() {
+        let mut matrix = Matrix::new(2,2);
+        matrix.matrix[0][0] = Some(12);
+        matrix.matrix[0][1] = Some(1); 
+        matrix.matrix[1][0] = Some(123);
+        matrix.matrix[1][1] = Some(1);
         assert_eq!(matrix.top_bot_spaces(), "         ");
     }
 
     #[test]
-    fn col_widths() {
-        let matrix = Matrix::new(1232112,1,123,1);
+    fn col_widths_are_counted_properly() {
+        let mut matrix = Matrix::new(2,2);
+        matrix.matrix[0][0] = Some(1232112);
+        matrix.matrix[0][1] = Some(1);
+        matrix.matrix[1][0] = Some(123);
+        matrix.matrix[1][1] = Some(1);
         assert_eq!(matrix.col_widths(),vec!(7,1));
     }
 
     #[test]
     fn top_bot_match_length_of_contents() {
-        let mut matrix = Matrix::new(123, 1234, 1, 1);
+        let mut matrix = Matrix::new(2,2);
+        matrix.matrix[0][0] = Some(123);
+        matrix.matrix[0][1] = Some(1234);
+        matrix.matrix[1][0] = Some(1);
+        matrix.matrix[1][1] = Some(1);
         assert_eq!(matrix.top_bot_spaces(), "            ");
-        matrix.matrix[1][0] = 12345;
+        matrix.matrix[1][0] = Some(12345);
         assert_eq!(matrix.top_bot_spaces(), "              ");
     }
 
     #[test]
     fn print_value_shows_trailing_spaces() {
-        let matrix = Matrix::new(12321, 1, 123, 32);
+//         let matrix = Matrix::new(12321, 1, 123, 32);
+        let mut matrix = Matrix::new(2,2);
+        matrix.matrix[0][0] = Some(12321);
+        matrix.matrix[0][1] = Some(1);
+        matrix.matrix[1][0] = Some(123);
+        matrix.matrix[1][1] = Some(32);
         assert_eq!(matrix.print_value(0,0), "12321");
         assert_eq!(matrix.print_value(0,1), "1 ");
         assert_eq!(matrix.print_value(1,0), "123  ");

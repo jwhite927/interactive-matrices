@@ -3,7 +3,7 @@ use matrix::Matrix;
 use std::io;
 
 fn main() {
-    let mut my_matrix = Matrix::new();
+    let mut my_matrix = Matrix::new(3,3);
     println!("{}", my_matrix);
     my_matrix.prompt_values();
 
