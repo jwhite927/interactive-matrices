@@ -2,8 +2,10 @@ use std::fmt;
 use crate::etc::{prompt_i32, num_digits};
 use std::cmp::Ordering;
 
+const MAX_ROWS_AND_COLUMNS: usize = 5;
+
 pub struct Matrix {
-    pub matrix: [[Option<i32>; 3]; 3],
+    pub matrix: [[Option<i32>; MAX_ROWS_AND_COLUMNS]; MAX_ROWS_AND_COLUMNS],
     rows: usize,
     columns: usize,
 }
@@ -11,7 +13,8 @@ pub struct Matrix {
 impl Matrix {
     pub fn new(rows: usize, columns: usize) -> Matrix {
         let new_matrix = Matrix {
-            matrix: [[None; 3]; 3],
+//             matrix: [[None; 3]; 3],
+            matrix: [[None; MAX_ROWS_AND_COLUMNS]; MAX_ROWS_AND_COLUMNS],
             rows,
             columns,
         };
@@ -52,7 +55,7 @@ impl Matrix {
 
     pub fn print_value(&self, row: usize, column: usize) -> String {
         let mut string_to_print = String::from(self.get_value(row,column).to_string());
-        for rows in 0..2 {
+        for rows in 0..self.rows {
             while num_digits(self.get_value(rows,column)) > string_to_print.len() {
                 string_to_print.push_str(" ");
             }
@@ -70,7 +73,6 @@ impl Matrix {
         }
     }
 
-//TODO Fix printing for 3x3
     pub fn col_widths(&self) -> Vec<usize> {
         let mut widest: usize = 0;
         let mut col_widths = Vec::new();

@@ -30,7 +30,7 @@ mod tests {
     }
     
     #[test]
-    fn display_looks_right_3x3() {
+    fn display_looks_right_3x3_all_1_digit() {
         let mut matrix = Matrix::new(3,3);
         matrix.matrix[0] = [Some(1), Some(1), Some(1)];
         matrix.matrix[1] = [Some(1), Some(1), Some(1)];
@@ -45,6 +45,26 @@ mod tests {
         check_string.push_str("1 , 1 , 1");
         check_string.push_str(" \u{2502}\n\u{2514}");
         check_string.push_str("           ");
+        check_string.push_str("\u{2518}");
+        assert_eq!(&format!("{}", matrix), &check_string);
+    }
+
+    #[test]
+    fn display_looks_right_3x3_rows_vary() {
+        let mut matrix = Matrix::new(3,3);
+        matrix.matrix[0] = [Some(1), Some(1), Some(1)];
+        matrix.matrix[1] = [Some(1), Some(1), Some(1)];
+        matrix.matrix[2] = [Some(12), Some(1), Some(1)];
+        let mut check_string = "\u{250C}".to_owned();
+        check_string.push_str("            ");
+        check_string.push_str("\u{2510}\n\u{2502} ");
+        check_string.push_str("1 , 1 , 1");
+        check_string.push_str(" \u{2502}\n\u{2502} ");
+        check_string.push_str("1 , 1 , 1");
+        check_string.push_str(" \u{2502}\n\u{2502} ");
+        check_string.push_str("12 , 1 , 1");
+        check_string.push_str(" \u{2502}\n\u{2514}");
+        check_string.push_str("            ");
         check_string.push_str("\u{2518}");
         assert_eq!(&format!("{}", matrix), &check_string);
     }
