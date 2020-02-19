@@ -141,4 +141,5 @@ mod tests {
         assert_eq!(matrix.print_value(1,0), "123  ");
         assert_eq!(matrix.print_value(1,1), "32");
     }
+
 }
