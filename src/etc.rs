@@ -24,6 +24,30 @@ pub fn prompt_i32() -> i32 {
     }
 }
 
+pub fn prompt_usize() -> usize {
+    let mut value = String::new();
+
+    loop {
+    match io::stdin().read_line(&mut value) {
+        Ok(_) => {
+            match value.trim().parse::<usize>() {
+                Ok(num) => return num,
+                Err(_) => {
+                    println!("{} is invalid, please enter a positive integer.", value.trim());
+                    value = String::new();
+                    continue;
+                },
+            }
+        },
+        Err(_) => {
+            println!("{} is invalid, please enter a positive integer.", value.trim());
+            value = String::new();
+            continue;
+        },
+    }
+    }
+}
+
 //Counts the number of spaces occupied by an integer
 pub fn num_digits(num: i32) -> usize {
     if num == 0 { 

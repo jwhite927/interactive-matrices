@@ -1,5 +1,5 @@
 use std::fmt;
-use crate::etc::{prompt_i32, num_digits};
+use crate::etc::{prompt_i32, prompt_usize, num_digits};
 use std::cmp::Ordering;
 
 const MAX_ROWS_AND_COLUMNS: usize = 5;
@@ -19,6 +19,15 @@ impl Matrix {
             columns,
         };
         new_matrix
+    }
+
+    pub fn new_prompt_size() -> Matrix {
+        println!("What size matrix would you like to manipulate?");
+        println!("Number of rows:");
+        let rows = prompt_usize();
+        println!("Number of columns:");
+        let columns = prompt_usize();
+        Matrix::new(rows, columns)
     }
 
     //get_value works with array indices starting at 0. It is only when 
