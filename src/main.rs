@@ -2,14 +2,14 @@ pub mod matrix;
 pub mod etc;
 pub mod system;
 // use matrix::Matrix;
-use system::System;
+// use system::System;
 use etc::prompt_usize;
 
 fn main() {
-    let mut system = system::System::new(2);
+    let mut system = system::System::new(3);
     system.prompt_values();
-//     println!("{}", system.matrix_a);
-//     println!("{}", system.matrix_b);
+    println!("{}", system.matrix_a);
+    println!("{}", system.matrix_b);
     println!("{}", system);
 
 //     let mut matrices = Vec::new();

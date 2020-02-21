@@ -58,9 +58,9 @@ mod tests {
         let mut check_string = "\u{250C}".to_owned();
         check_string.push_str("            ");
         check_string.push_str("\u{2510}\n\u{2502} ");
-        check_string.push_str("1 , 1 , 1");
+        check_string.push_str("1  , 1 , 1");
         check_string.push_str(" \u{2502}\n\u{2502} ");
-        check_string.push_str("1 , 1 , 1");
+        check_string.push_str("1  , 1 , 1");
         check_string.push_str(" \u{2502}\n\u{2502} ");
         check_string.push_str("12 , 1 , 1");
         check_string.push_str(" \u{2502}\n\u{2514}");

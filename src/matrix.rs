@@ -2,12 +2,12 @@ use std::fmt;
 use crate::etc::{prompt_i32, prompt_usize, num_digits};
 use std::cmp::Ordering;
 
-const MAX_ROWS_AND_COLUMNS: usize = 5;
+const MAX_ROWS_AND_COLUMNS: usize = 3;
 
 pub struct Matrix {
     pub matrix: [[Option<i32>; MAX_ROWS_AND_COLUMNS]; MAX_ROWS_AND_COLUMNS],
-    rows: usize,
-    columns: usize,
+    pub rows: usize,
+    pub columns: usize,
 }
 
 impl Matrix {
