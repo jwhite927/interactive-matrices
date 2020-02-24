@@ -28,10 +28,10 @@ impl System {
 
     pub fn prompt_values(&mut self) {
         println!("Please fill in coefficients matrix...");
-        println!("{}", self.matrix_a);
+        println!("{}", self);
         self.matrix_a.prompt_values();
         println!("Please fill in right side matrix...");
-        println!("{}", self.matrix_b);
+        println!("{}", self);
         self.matrix_b.prompt_values();
     }
 }
