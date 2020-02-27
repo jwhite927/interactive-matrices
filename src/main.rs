@@ -1,5 +1,5 @@
-pub mod matrix;
 pub mod etc;
+pub mod matrix;
 pub mod system;
 // use matrix::Matrix;
 // use system::System;
@@ -12,25 +12,25 @@ fn main() {
     // println!("{}", system.matrix_b);
     println!("{}", system);
 
-//     let mut matrices = Vec::new();
-//     loop {
-//         match intro_prompt() {
-//             1 => {
-//                 matrices.push(Matrix::new_prompt_size());
-//                 println!("{}", matrices.last().unwrap());
-//                 matrices.last_mut().unwrap().prompt_values();
-//             },
-//             2 => {
-//                 println!("Quitting...");
-//                 break;
-//             },
-//             _ => println!("Invalid, please try again."),
-//         }
-//         println!("Matrix(ces) in memory:");
-//         for matrix in &matrices {
-//             println!("{}", matrix);
-//         }
-//     }
+    //     let mut matrices = Vec::new();
+    //     loop {
+    //         match intro_prompt() {
+    //             1 => {
+    //                 matrices.push(Matrix::new_prompt_size());
+    //                 println!("{}", matrices.last().unwrap());
+    //                 matrices.last_mut().unwrap().prompt_values();
+    //             },
+    //             2 => {
+    //                 println!("Quitting...");
+    //                 break;
+    //             },
+    //             _ => println!("Invalid, please try again."),
+    //         }
+    //         println!("Matrix(ces) in memory:");
+    //         for matrix in &matrices {
+    //             println!("{}", matrix);
+    //         }
+    //     }
 }
 
 pub fn intro_prompt() -> usize {
@@ -40,6 +40,3 @@ pub fn intro_prompt() -> usize {
 
     prompt_usize()
 }
-
-
-

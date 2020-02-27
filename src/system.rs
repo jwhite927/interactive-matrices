@@ -1,5 +1,5 @@
-use std::fmt;
 use crate::matrix::Matrix;
+use std::fmt;
 
 pub struct System {
     pub matrix_a: Matrix,
@@ -46,7 +46,7 @@ impl fmt::Display for System {
         string_to_write.push_str("\u{2510}\n\u{2502} ");
         for row in 0..self.matrix_a.rows {
             for column in 0..self.matrix_a.columns {
-                string_to_write.push_str(&self.matrix_a.print_value(row,column));
+                string_to_write.push_str(&self.matrix_a.print_value(row, column));
                 if column < self.matrix_a.columns - 1 {
                     string_to_write.push_str(" , ");
                 }
@@ -63,7 +63,7 @@ impl fmt::Display for System {
                 string_to_write.push_str(&self.matrix_b.print_value(row, column));
             }
             if row < self.matrix_a.rows - 1 {
-            string_to_write.push_str(" \u{2502}\n\u{2502} ");
+                string_to_write.push_str(" \u{2502}\n\u{2502} ");
             }
         }
         string_to_write.push_str(" \u{2502}\n\u{2514}");

@@ -1,6 +1,6 @@
-use std::fmt;
-use crate::etc::{prompt_i32, prompt_usize, num_digits};
+use crate::etc::{num_digits, prompt_i32, prompt_usize};
 use std::cmp::Ordering;
+use std::fmt;
 
 const MAX_ROWS_AND_COLUMNS: usize = 3;
 
@@ -13,7 +13,7 @@ pub struct Matrix {
 impl Matrix {
     pub fn new(rows: usize, columns: usize) -> Matrix {
         let new_matrix = Matrix {
-//             matrix: [[None; 3]; 3],
+            //             matrix: [[None; 3]; 3],
             matrix: [[None; MAX_ROWS_AND_COLUMNS]; MAX_ROWS_AND_COLUMNS],
             rows,
             columns,
@@ -30,7 +30,7 @@ impl Matrix {
         Matrix::new(rows, columns)
     }
 
-    //get_value works with array indices starting at 0. It is only when 
+    //get_value works with array indices starting at 0. It is only when
     //a value is presented to the user that values start at 1.
     pub fn get_value(&self, row: usize, column: usize) -> i32 {
         let mut row_to_return = self.rows - 1;
@@ -60,12 +60,12 @@ impl Matrix {
             string.push_str(" ");
         }
         string
-}
+    }
 
     pub fn print_value(&self, row: usize, column: usize) -> String {
-        let mut string_to_print = String::from(self.get_value(row,column).to_string());
+        let mut string_to_print = String::from(self.get_value(row, column).to_string());
         for rows in 0..self.rows {
-            while num_digits(self.get_value(rows,column)) > string_to_print.len() {
+            while num_digits(self.get_value(rows, column)) > string_to_print.len() {
                 string_to_print.push_str(" ");
             }
         }
@@ -75,7 +75,11 @@ impl Matrix {
     pub fn prompt_values(&mut self) {
         for row in 0..self.rows {
             for column in 0..self.columns {
-                println!("Please enter a value for position {},{}", row + 1, column + 1);
+                println!(
+                    "Please enter a value for position {},{}",
+                    row + 1,
+                    column + 1
+                );
                 self.matrix[row][column] = Some(prompt_i32());
                 println!("{}", self);
             }
@@ -87,8 +91,8 @@ impl Matrix {
         let mut col_widths = Vec::new();
         for column in 0..self.columns {
             for row in 0..self.rows {
-                if num_digits(self.get_value(row,column)) > widest {
-                    widest = num_digits(self.get_value(row,column)); 
+                if num_digits(self.get_value(row, column)) > widest {
+                    widest = num_digits(self.get_value(row, column));
                 }
             }
             col_widths.push(widest);
@@ -105,13 +109,13 @@ impl fmt::Display for Matrix {
         string_to_write.push_str("\u{2510}\n\u{2502} ");
         for row in 0..self.rows {
             for column in 0..self.columns {
-                string_to_write.push_str(&self.print_value(row,column));
+                string_to_write.push_str(&self.print_value(row, column));
                 if column < self.columns - 1 {
                     string_to_write.push_str(" , ");
                 }
             }
             if row < self.rows - 1 {
-            string_to_write.push_str(" \u{2502}\n\u{2502} ");
+                string_to_write.push_str(" \u{2502}\n\u{2502} ");
             }
         }
         string_to_write.push_str(" \u{2502}\n\u{2514}");
